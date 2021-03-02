@@ -10,11 +10,11 @@ const Issue = require("../models/Issue");
 
 exports.issuePostHandler = (req, res) => {
   if (!req.body.title) {
-    res.status(400).json({ error: "Title must not be empty!" });
+    res.status(400).json({ error: "Title cannot be empty!" });
     return;
   }
   if (!req.body.description) {
-    res.status(400).json({ error: "Description must not be empty!" });
+    res.status(400).json({ error: "Description cannot be empty!" });
     return;
   }
   var attachments = null;

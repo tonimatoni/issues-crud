@@ -17,11 +17,10 @@ exports.categoryGetAll = async (req, res) => {
 
 exports.categoryPostHandler = async (req, res) => {
   if (!req.body.title) {
-    res.status(400).json({ error: "Title must not be empty!" });
+    res.status(400).json({ error: "Title cannot be empty!" });
     return;
   }
   let ctg = await findCategoryByTitle(req.body.title);
-  console.log(ctg);
   if (ctg) {
     res.status(200).json(ctg._id);
     return;
@@ -34,7 +33,7 @@ exports.categoryPostHandler = async (req, res) => {
   category
     .save()
     .then((data) => {
-      res.status(200).json(data._id);
+      res.status(201).json(data._id);
     })
     .catch((err) => {
       res

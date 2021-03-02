@@ -44,7 +44,7 @@ describe("Issues POST route", () => {
           res.should.have.status(400);
           res.body.should.be.a("object");
           res.body.should.have.property("error");
-          res.body.error.should.equal("Description must not be empty!");
+          res.body.error.should.equal("Description cannot be empty!");
           done();
         });
     });
@@ -62,7 +62,7 @@ describe("Issues POST route", () => {
           res.should.have.status(400);
           res.body.should.be.a("object");
           res.body.should.have.property("error");
-          res.body.error.should.equal("Title must not be empty!");
+          res.body.error.should.equal("Title cannot be empty!");
           done();
         });
     });
