@@ -1,9 +1,15 @@
 var express = require("express");
 var router = express.Router();
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.send("test");
-});
+const issueController = require("../app/controllers/issueController.js");
+const uploadController = require("../app/controllers/uploadController.js");
+
+router.get("/create", issueController.createFormHandler);
+
+router.post(
+  "/post",
+  uploadController.upload.array("attachments", 10),
+  issueController.issuePostHandler
+);
 
 module.exports = router;
