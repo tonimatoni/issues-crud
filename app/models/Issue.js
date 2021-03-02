@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Category = require("./Category");
 
 const IssueSchema = mongoose.Schema({
   title: {
@@ -32,11 +33,13 @@ const IssueSchema = mongoose.Schema({
       contentType: { type: String, default: null },
     },
   ],
-
   status: {
     type: String,
     enum: ["pending", "finished"],
     default: "pending",
+  },
+  category_id: {
+    type: String,
   },
 });
 
