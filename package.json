@@ -1,0 +1,34 @@
+{
+  "name": "issues",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "testIssuesApi": "mocha 'test/**/issues/*.js'",
+    "test": "mocha 'test/**/*.js'"
+  },
+  "dependencies": {
+    "chai": "^4.3.0",
+    "chai-http": "^4.3.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "ejs": "^1.0.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jsdoc": "^3.6.6",
+    "mocha": "^8.3.0",
+    "mongoose": "^5.11.15",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.7"
+  },
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
