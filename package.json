@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "testIssuesApi": "mocha 'test/**/issues/*.js'",
+    "testCategoriesApi": "mocha 'test/**/categories/*.js'",
     "test": "mocha 'test/**/*.js'"
   },
   "dependencies": {
