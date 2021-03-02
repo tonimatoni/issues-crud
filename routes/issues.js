@@ -4,8 +4,6 @@ var router = express.Router();
 const issueController = require("../app/controllers/issueController.js");
 const uploadController = require("../app/controllers/uploadController.js");
 
-router.get("/create", issueController.createFormHandler);
-
 router.post(
   "/post",
   uploadController.upload.array("attachments", 10),

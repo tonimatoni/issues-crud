@@ -42,12 +42,3 @@ exports.issuePostHandler = (req, res) => {
       res.status(400).json({ error: "Error while adding an issue \n" + err });
     });
 };
-
-/**
- * Renders view "create.ejs" that has form for post method.
- * @function createFormHandler
- */
-
-exports.createFormHandler = async (req, res) => {
-  res.render("create");
-};
