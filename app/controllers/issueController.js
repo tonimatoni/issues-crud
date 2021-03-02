@@ -5,6 +5,7 @@ const Issue = require("../models/Issue");
  * @function issuePostHandler
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} req - Request object from post method.
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} res - Response object.
+ *
  */
 
 exports.issuePostHandler = (req, res) => {
@@ -24,19 +25,21 @@ exports.issuePostHandler = (req, res) => {
         contentType: "application/octet-stream",
       };
     });
-
   const issue = new Issue({
     title: req.body.title,
     description: req.body.description,
     attachments: attachments,
+    category_id: req.body.category_id,
   });
 
   issue
     .save()
     .then((data) => {
-      res
-        .status(200)
-        .json({ message: `Added issue ${data.title} successfully.` });
+      res.status(200).json({
+        message: `Added issue ${data.title} successfully.`,
+        id: data._id,
+        category_id: data.category_id,
+      });
     })
     .catch((err) => {
       res.status(400).json({ error: "Error while adding an issue \n" + err });

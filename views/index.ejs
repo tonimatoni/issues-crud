@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <form id="createIssueForm">
+                    <form id="createCategoryForm">
                         <div class="row">
                             <div class="col">
                                 <label for="title">Add some title:</label>
@@ -44,6 +44,13 @@
                                 <label for="attachments">Add attachments:</label>
                                 <input class="form-control-file" id="attachments" type="file" name="attachments"
                                     multiple>
+                            </div>
+                            <div class="col">
+                                <label for="category">Choose category:</label>
+                                <input id="category" class="form-control" list="categoriesList" type="text"
+                                    name="category">
+                                <datalist id="categoriesList">
+                                </datalist>
                             </div>
                             <div class="col">
                                 <br>

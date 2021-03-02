@@ -8,6 +8,7 @@ db();
 
 var indexRouter = require("./routes/index");
 var issuesRouter = require("./routes/issues");
+var categoriesRouter = require("./routes/categories");
 var app = express();
 
 // set the base directroy
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/issues", issuesRouter);
+app.use("/categories", categoriesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
