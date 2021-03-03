@@ -15,6 +15,12 @@ exports.categoryGetAll = async (req, res) => {
   res.status(200).json(categories);
 };
 
+/**
+ * Function that tries to add new category to the DB.
+ * @function categoryPostHandler
+ * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} req - Request object from post method.
+ * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} res - Response object.
+ */
 exports.categoryPostHandler = async (req, res) => {
   if (!req.body.title) {
     res.status(400).json({ error: "Title cannot be empty!" });
@@ -42,10 +48,6 @@ exports.categoryPostHandler = async (req, res) => {
     });
 };
 
-const findCategoryByTitle = (title) => {
-  return Category.findOne({ title: title }).exec();
-};
-
 exports.categoryAddIssueHandler = async (req, res) => {
   const category = await Category.findById(req.body.category_id);
   category.issues_ids.push(req.body.issue_id);
@@ -55,4 +57,15 @@ exports.categoryAddIssueHandler = async (req, res) => {
   } catch (error) {
     res.status(400);
   }
+};
+
+/**
+ * Finds and returns a category by its title.
+ * @function findCategoryByTitle
+ * @param {String} title
+ * @returns {Promise<Document<any>>} Promise of a category
+ */
+
+const findCategoryByTitle = (title) => {
+  return Category.findOne({ title: title }).exec();
 };

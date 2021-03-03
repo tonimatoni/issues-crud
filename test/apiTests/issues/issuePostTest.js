@@ -1,5 +1,7 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
+var dotenv = require("dotenv");
+dotenv.config({ path: process.cwd() + "/test.env" });
 const app = require("../../../app.js");
 
 // Assertion style
