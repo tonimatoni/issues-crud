@@ -9,6 +9,7 @@ db();
 var indexRouter = require("./routes/index");
 var issuesRouter = require("./routes/issues");
 var app = express();
+var swagger = require("./swagger/swagger.js");
 
 // set the base directroy
 global.__basedir = __dirname;
@@ -17,6 +18,7 @@ global.__basedir = __dirname;
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use("/api-docs", swagger.ui.serve, swagger.ui.setup(swagger.docs));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
