@@ -22,7 +22,7 @@ module.exports = function connectToDB() {
   //Get the default connection
   var db = mongoose.connection;
   // Clear database if in test mode
-  if (process.env.TEST == true) db.dropDatabase();
+  if (process.env.TEST == "true") db.dropDatabase();
   //Bind connection to error event (to get notification of connection errors)
   db.on("error", console.error.bind(console, "MongoDB connection error:"));
 };
