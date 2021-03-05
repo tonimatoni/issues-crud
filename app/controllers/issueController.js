@@ -36,7 +36,7 @@ exports.issueReadByCategory = async (req, res) => {
     res.status(200).json(issues);
     return;
   }
-  res.status(404).json("Can't find that category ID");
+  res.status(404).json("No issues in that category!");
 };
 
 /**
