@@ -24,10 +24,6 @@ chai.should();
 chai.use(chaiHttp);
 
 describe("Issues GET route", () => {
-  /**
-   *
-   */
-
   describe("GET /issues/get", () => {
     it("It should GET all issues", (done) => {
       chai
@@ -43,8 +39,8 @@ describe("Issues GET route", () => {
       var category = await Category.findOne().exec();
       chai
         .request(app)
-        .get("/issues/get-by-category?category_id=" + category._id)
-        .send()
+        .get("/issues/get-by-category")
+        .query({ category_id: category._id })
         .end((err, res) => {
           res.should.have.status(200);
         });
@@ -63,9 +59,9 @@ describe("Issues GET route", () => {
       chai
         .request(app)
         .get("/issues/get-by-category")
-        .send("category123")
+        .query({ category_id: "category123" })
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(404);
           done();
         });
     });
@@ -73,9 +69,9 @@ describe("Issues GET route", () => {
       chai
         .request(app)
         .get("/issues/get-by-category")
-        .send("")
+        .query("")
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(404);
           done();
         });
     });

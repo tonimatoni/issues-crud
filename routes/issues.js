@@ -80,8 +80,8 @@ router.get("/get", issueController.issueReadHandler);
  *                   type: array
  *                 __v:
  *                   type: number
- *       '400':
- *         description: Can't find category by that ID or category_id is empty
+ *       '404':
+ *         description: Can't find category by that ID
  *         type: String
  */
 router.get("/get-by-category", issueController.issueReadByCategory);

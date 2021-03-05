@@ -1,7 +1,7 @@
 const Issue = require("../models/Issue");
 
 /**
- * Reads all issues from the reqbase.
+ * Reads all issues from the MongoDB.
  * @function issueReadHandler
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} req - Request object from post method.
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} res - Response object.
@@ -12,6 +12,13 @@ exports.issueReadHandler = async (req, res) => {
   res.status(200).json(issues);
 };
 
+/**
+ * Reads all issues by provided category ID from the MongoDB.
+ * @function issueReadHandler
+ * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} req - Request object from post method.
+ * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} res - Response object.
+ */
+
 exports.issueReadByCategory = async (req, res) => {
   const issues = await Issue.find({
     category_id: req.query.category_id,
@@ -20,5 +27,5 @@ exports.issueReadByCategory = async (req, res) => {
     res.status(200).json(issues);
     return;
   }
-  res.status(400).json("Can't find that category ID");
+  res.status(404).json("Can't find that category ID");
 };
