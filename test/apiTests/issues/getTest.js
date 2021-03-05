@@ -4,12 +4,28 @@ var dotenv = require("dotenv");
 dotenv.config({ path: process.cwd() + "/test.env" });
 const app = require("../../../app.js");
 
-const Issue = require("../../../app/models/Issue");
-const Category = require("../../../app/models/Category");
+const Issue = require("../../../app/models/Issue").model;
+const Category = require("../../../app/models/Category").model;
 
 // Add some data before testing
 Category.create({ title: "TestTitle" })
   .then((data) => {
+    console.log(data._id);
+    Issue.create({
+      title: "GetTestTitle",
+      description: "Some description",
+      category_id: data._id,
+    });
+    Issue.create({
+      title: "GetTestTitle",
+      description: "Some description",
+      category_id: data._id,
+    });
+    Issue.create({
+      title: "GetTestTitle",
+      description: "Some description",
+      category_id: data._id,
+    });
     Issue.create({
       title: "GetTestTitle",
       description: "Some description",
@@ -35,16 +51,7 @@ describe("Issues GET route", () => {
           done();
         });
     });
-    it("It should GET issues by category ID", async () => {
-      var category = await Category.findOne().exec();
-      chai
-        .request(app)
-        .get("/issues/get-by-category")
-        .query({ category_id: category._id })
-        .end((err, res) => {
-          res.should.have.status(200);
-        });
-    });
+
     it("It should NOT GET issues", (done) => {
       chai
         .request(app)
@@ -65,6 +72,8 @@ describe("Issues GET route", () => {
           done();
         });
     });
+  });
+  describe("GET /issues/get-by-category", () => {
     it("It should NOT GET issues by category ID (empty ID)", (done) => {
       chai
         .request(app)
@@ -73,6 +82,20 @@ describe("Issues GET route", () => {
         .end((err, res) => {
           res.should.have.status(404);
           done();
+        });
+    });
+    it("It should GET issues by category ID", (done) => {
+      Category.findOne()
+        .exec()
+        .then((data) => {
+          console.log(data._id);
+          chai
+            .request(app)
+            .get("/issues/get-by-category?category_id=" + data._id)
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
         });
     });
   });

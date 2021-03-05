@@ -6,7 +6,7 @@
     "start": "nodemon ./bin/www",
     "testIssuesApi": "mocha 'test/**/issues/*.js'",
     "testCategoriesApi": "mocha 'test/**/categories/*.js'",
-    "test": "mocha 'test/**/*.js'"
+    "test": "mocha 'test/**/*.js' --timeout 10000"
   },
   "dependencies": {
     "chai": "^4.3.0",
@@ -18,6 +18,7 @@
     "esm": "^3.2.25",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "joi": "^17.4.0",
     "jsdoc": "^3.6.6",
     "mocha": "^8.3.0",
     "mongoose": "^5.11.15",

@@ -1,4 +1,4 @@
-const Category = require("../models/Category");
+const Category = require("../models/Category").model;
 
 /**
  * Function that gets all categories from DB.
@@ -13,4 +13,21 @@ exports.categoryGetAll = async (req, res) => {
     .select({ title: 1, _id: 1 })
     .exec();
   res.status(200).json(categories);
+};
+
+/**
+ * Deletes issue from category.
+ * @function deleteIssueFromCategory
+ * @param {String} issueID
+ * @param {String} categoryID
+ *
+ */
+
+exports.deleteIssueFromCategory = async (issueID, categoryID = null) => {
+  if (categoryID)
+    await Category.updateOne(
+      { _id: categoryID },
+      { $pull: { issues_ids: issueID } }
+    ).exec();
+  return;
 };

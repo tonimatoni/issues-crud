@@ -85,5 +85,31 @@ router.get("/get", issueController.issueReadHandler);
  *         type: String
  */
 router.get("/get-by-category", issueController.issueReadByCategory);
-
+/**
+ * @swagger
+ * /issues/delete/{id}:
+ *   delete:
+ *     summary: Deletes an issue by it's ID
+ *     tags:
+ *     - issues
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: String
+ *         required: true
+ *         description: ID of issue to delete
+ *     responses:
+ *       '202':
+ *         description: Successfully deleted an issue,
+ *         content:
+ *           application/json:
+ *             type: string
+ *       '404':
+ *         description: Can't find issue by that ID
+ *         content:
+ *           application/json:
+ *             type: String
+ */
+router.delete("/delete/:id", issueController.issueDeleteById);
 module.exports = router;

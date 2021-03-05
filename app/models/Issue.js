@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
 
 const IssueSchema = mongoose.Schema({
   title: {
@@ -42,4 +43,9 @@ const IssueSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Issues", IssueSchema);
+exports.model = mongoose.model("Issues", IssueSchema);
+
+exports.validator = Joi.object().keys({
+  title: Joi.string().alphanum().min(4).max(30).required(),
+  description: Joi.string().alphanum().min(4).max(200).required(),
+});
