@@ -12,7 +12,10 @@ const IssueSchema = mongoose.Schema({
   },
   comments: [
     {
-      type: String,
+      comment: {
+        type: String,
+        required: true,
+      },
       created_at: {
         type: Date,
         default: Date.now(),
