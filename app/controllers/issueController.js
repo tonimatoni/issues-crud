@@ -1,4 +1,5 @@
-const Issue = require("../models/Issue");
+const Issue = require("../models/Issue").model;
+const issueValidator = require("../models/Issue").validator;
 
 /**
  * Function that adds new issue to the MongoDB.
@@ -9,14 +10,6 @@ const Issue = require("../models/Issue");
  */
 
 exports.issuePostHandler = (req, res) => {
-  if (!req.body.title) {
-    res.status(400).json({ error: "Title cannot be empty!" });
-    return;
-  }
-  if (!req.body.description) {
-    res.status(400).json({ error: "Description cannot be empty!" });
-    return;
-  }
   var attachments = null;
   if (req.files)
     attachments = req.files.map((file) => {
@@ -25,6 +18,11 @@ exports.issuePostHandler = (req, res) => {
         contentType: "application/octet-stream",
       };
     });
+  const errorMessage = issueValidator.validate(req.body).error;
+  if (errorMessage) {
+    res.status(400).json({ error: errorMessage.details });
+    return;
+  }
   const issue = new Issue({
     title: req.body.title,
     description: req.body.description,

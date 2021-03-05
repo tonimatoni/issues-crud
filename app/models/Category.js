@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
 
 const CategorySchema = mongoose.Schema({
   title: {
@@ -8,4 +9,8 @@ const CategorySchema = mongoose.Schema({
   issues_ids: [String],
 });
 
-module.exports = mongoose.model("Categories", CategorySchema);
+exports.model = mongoose.model("Categories", CategorySchema);
+
+exports.validator = Joi.object().keys({
+  title: Joi.string().alphanum().min(4).max(30).required(),
+});

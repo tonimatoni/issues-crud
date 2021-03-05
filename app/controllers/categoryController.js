@@ -1,4 +1,5 @@
-const Category = require("../models/Category");
+const Category = require("../models/Category").model;
+const categoryValidator = require("../models/Category").validator;
 
 /**
  * Function that gets all categories from DB.
@@ -22,10 +23,12 @@ exports.categoryGetAll = async (req, res) => {
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} res - Response object.
  */
 exports.categoryPostHandler = async (req, res) => {
-  if (!req.body.title) {
-    res.status(400).json({ error: "Title cannot be empty!" });
+  const errorMessage = categoryValidator.validate(req.body).error;
+  if (errorMessage) {
+    res.status(400).json({ error: errorMessage.details });
     return;
   }
+
   let ctg = await findCategoryByTitle(req.body.title);
   if (ctg) {
     res.status(200).json(ctg._id);
@@ -35,18 +38,20 @@ exports.categoryPostHandler = async (req, res) => {
   const category = new Category({
     title: req.body.title,
   });
-
-  category
-    .save()
-    .then((data) => {
-      res.status(201).json(data._id);
-    })
-    .catch((err) => {
-      res
-        .status(400)
-        .json({ error: "Error while creating a category \n" + err });
-    });
+  try {
+    let data = await category.save();
+    res.status(201).json(data._id);
+  } catch (error) {
+    res.status(400).json({ error: "Error while creating a category \n" + err });
+  }
 };
+
+/**
+ * Updates category by pushing new issue_id into "issues" property
+ * @function categoryAddIssueHandler
+ * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} req - Request object from post method.
+ * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} res - Response object.
+ */
 
 exports.categoryAddIssueHandler = async (req, res) => {
   const category = await Category.findById(req.body.category_id);
@@ -66,6 +71,6 @@ exports.categoryAddIssueHandler = async (req, res) => {
  * @returns {Promise<Document<any>>} Promise of a category
  */
 
-const findCategoryByTitle = (title) => {
-  return Category.findOne({ title: title }).exec();
+const findCategoryByTitle = async (title) => {
+  return Category.findOne({ title: title }).exec() || false;
 };
