@@ -49,6 +49,20 @@ const IssueSchema = mongoose.Schema({
 exports.model = mongoose.model("Issues", IssueSchema);
 
 exports.validator = Joi.object().keys({
-  title: Joi.string().alphanum().min(4).max(30).required(),
-  description: Joi.string().alphanum().min(4).max(200).required(),
+  title: Joi.string().min(4).max(30).required(),
+  description: Joi.string().min(4).max(200).required(),
 });
+
+exports.commentsValidator = Joi.object().keys({
+  comment: Joi.string().min(4).max(200).required(),
+  issue_id: Joi.string().alphanum().length(24).required(),
+});
+
+exports.updateValidator = Joi.object()
+  .keys({
+    title: Joi.string().min(4).max(30).optional(),
+    description: Joi.string().min(4).max(200).optional(),
+  })
+  .options({
+    abortEarly: false,
+  });
