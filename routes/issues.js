@@ -1,34 +1,68 @@
 var express = require("express");
 var router = express.Router();
 
-const issueController = require("../app/controllers/issueController");
+const issueController = require("../app/controllers/issueController.js");
+const uploadController = require("../app/controllers/uploadController.js");
+
 /**
  * @swagger
- * /issues/get:
- *   get:
- *     summary: Gets all of the issues.
- *     description: Use to request for all issues
+ * /issues/post:
+ *   post:
+ *     summary: Creates a new Issue
+ *     description: Use to post new record in issues collection
  *     tags:
  *       - issues
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *       - in: formData
+ *         name: title
+ *         required: true
+ *         type: string
+ *         description: Title of issue to be created.
+ *         example: Talk to CEO.
+ *       - in: formData
+ *         name: description
+ *         type: string
+ *         required: true
+ *         description: Description of issue to be created.
+ *         example: Talk about the current opportunities in company.
+ *       - in: formData
+ *         name: attachments
+ *         type: file
+ *         description: Files associated with the issue.
+ *       - in: formData
+ *         name: category_id
+ *         type: string
+ *         description: ID of category that issue belongs to.
  *     responses:
  *       '200':
- *         description: A list of all issues,
+ *         description: Created new record,
  *         content:
  *           application/json:
  *             type: object
  *             properties:
- *               issues:
- *                 type: array
- *                 title:
- *                   type: string
- *                   description: Issue title
- *                   example: Take out trash
- *                 _id:
- *                   type: string
- *                   description: Issue ID
- *                   example: dsaffasd3241oplea3
+ *               message:
+ *                 type: string
+ *               id:
+ *                 type: string
+ *               category_id:
+ *                 type: string
+ *       '400':
+ *         description: When trying to add issue without title or description,
+ *         content:
+ *           application/json:
+ *             type: object
+ *             properties:
+ *               error:
+ *                 type: string
  */
-router.get("/get", issueController.issueReadHandler);
+
+router.post(
+  "/post",
+  uploadController.upload.array("attachments", 10),
+  issueController.issuePostHandler
+);
 
 /**
  * @swagger
@@ -112,4 +146,31 @@ router.get("/get-by-category", issueController.issueReadByCategory);
  *             type: String
  */
 router.delete("/delete/:id", issueController.issueDeleteById);
+/**
+ * @swagger
+ * /issues/get:
+ *   get:
+ *     summary: Gets all of the issues.
+ *     description: Use to request for all issues
+ *     tags:
+ *       - issues
+ *     responses:
+ *       '200':
+ *         description: A list of all issues,
+ *         content:
+ *           application/json:
+ *             type: object
+ *             properties:
+ *               issues:
+ *                 type: array
+ *                 title:
+ *                   type: string
+ *                   description: Issue title
+ *                   example: Take out trash
+ *                 _id:
+ *                   type: string
+ *                   description: Issue ID
+ *                   example: dsaffasd3241oplea3
+ */
+router.get("/get", issueController.issueReadHandler);
 module.exports = router;
