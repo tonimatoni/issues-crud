@@ -6,7 +6,7 @@ const CategorySchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  issues_id: [String],
+  issues_ids: [String],
 });
 
 exports.model = mongoose.model("Categories", CategorySchema);
