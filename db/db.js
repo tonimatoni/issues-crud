@@ -7,7 +7,6 @@ module.exports = function connectToDB() {
   if (process.env.TEST != "true")
     dotenv.config({ path: process.cwd() + "/config.env" });
   var mongoDB = process.env.DB_CONNECTION;
-  console.log(mongoDB);
   mongoose.connect(
     mongoDB,
     {

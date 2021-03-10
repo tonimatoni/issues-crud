@@ -71,7 +71,6 @@ exports.issueReadByCategory = async (req, res) => {
   const validate = { id: req.query.category_id };
   const errorMessage = idValidator.validate(validate).error;
   if (errorMessage) {
-    console.log(errorMessage.details);
     res.status(400).json({ error: errorMessage.message });
     return;
   }
@@ -102,7 +101,6 @@ exports.issueDeleteById = async (req, res) => {
   let issue = {};
   const errorMessage = idValidator.validate(req.params).error;
   if (errorMessage) {
-    console.log(errorMessage.details);
     res.status(400).json({ error: errorMessage.message });
     return;
   }

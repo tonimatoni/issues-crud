@@ -10,7 +10,6 @@ const Category = require("../../../app/models/Category").model;
 // Add some data before testing
 Category.create({ title: "TestTitle" })
   .then((data) => {
-    console.log(data._id);
     Issue.create({
       title: "GetTestTitle",
       description: "Some description",
@@ -88,7 +87,6 @@ describe("Issues GET route", () => {
       Category.findOne()
         .exec()
         .then((data) => {
-          console.log(data._id);
           chai
             .request(app)
             .get("/issues/get-by-category?category_id=" + data._id)

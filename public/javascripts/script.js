@@ -95,7 +95,6 @@ $(document).ready(function () {
     dataType: "json",
     success: function (categories) {
       appendCategoriesToDropdown(categories);
-      console.log(categories);
     },
   });
 
