@@ -31,7 +31,7 @@ $(document).ready(function () {
       data: { title: category },
 
       success: function (id) {
-        fd.append("category_id", id);
+        formData.append("category_id", id);
         addIssue(formData);
       },
       error: function (response) {
@@ -227,6 +227,24 @@ $(document).ready(function () {
       success: function (response) {
         getCategoriesAll();
         updateCategory(response.id, response.category_id);
+      },
+    });
+  }
+
+  /**
+   * Updates category, adding new issue ID to the array
+   * @param {String} id - Issue ID
+   * @param {String} id - Category ID
+   */
+
+  function updateCategory(issue_id, category_id) {
+    $.ajax({
+      type: "PUT",
+      url: baseURL + "/categories/update",
+      data: { issue_id: issue_id, category_id: category_id },
+      dataType: "json",
+      success: function (response) {
+        alert(response);
       },
     });
   }
