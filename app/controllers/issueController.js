@@ -1,6 +1,7 @@
 const Issue = require("../models/Issue").model;
 const commentsValidator = require("../models/Issue").commentsValidator;
 const updateValidator = require("../models/Issue").updateValidator;
+const issueStatus = require("../constants/enums").issueStatusEnum;
 
 /**
  * Function that adds new comment to an issue.
@@ -12,13 +13,12 @@ const updateValidator = require("../models/Issue").updateValidator;
 
 exports.commentPostHandler = async (req, res) => {
   try {
-    const toValidate = {
+    const params = {
       issue_id: req.params.id,
       comment: req.body.comment,
     };
-    commentsValidator.validate(toValidate, {});
 
-    const errorMessage = commentsValidator.validate(toValidate).error;
+    const errorMessage = commentsValidator.validate(params).error;
     if (errorMessage) {
       res.status(400).json({ error: errorMessage.message });
       return;
@@ -26,16 +26,16 @@ exports.commentPostHandler = async (req, res) => {
 
     // Finds issue by it's ID, and updates by pushing new value into comments array
     await Issue.updateOne(
-      { _id: toValidate.issue_id },
+      { _id: params.issue_id },
       {
         $push: {
-          comments: { comment: toValidate.comment },
+          comments: { comment: params.comment },
         },
       }
     );
     res
       .status(200)
-      .json("Successfully added a comment to issue " + toValidate.issue_id);
+      .json("Successfully added a comment to issue " + params.issue_id);
   } catch (error) {
     console.log(error);
   }
@@ -95,15 +95,15 @@ exports.issueSetDoneHandler = async (req, res) => {
       return;
     }
 
-    if (issue.status === "finished") {
+    if (issue.status === issueStatus.FINISHED) {
       res.status(400).json("Couldn't update issue");
       return;
     }
     issue.finished_at = new Date();
-    issue.status = "finished";
+    issue.status = issueStatus.FINISHED;
     issue.save();
 
-    res.status(200).json("Status set to 'finished'");
+    res.status(200).json(`Status set to '${issueStatus.FINISHED}'`);
   } catch (error) {
     console.log(error);
   }
