@@ -11,13 +11,28 @@ const categoryValidator = require("../models/Category").validator;
 
 exports.categoryGetAll = async (req, res) => {
   const categories = await Category.find({})
-    .select({ title: 1, _id: 0 })
+    .select({ title: 1, _id: 1 })
     .exec();
   res.status(200).json(categories);
 };
 
 /**
- * Function that tries to add new category to the DB.
+ * Deletes issue from category.
+ * @function deleteIssueFromCategory
+ * @param {String} issueID
+ * @param {String} categoryID
+ *
+ */
+
+exports.deleteIssueFromCategory = async (issueID, categoryID = null) => {
+  if (categoryID)
+    await Category.updateOne(
+      { _id: categoryID },
+      { $pull: { issues_ids: issueID } }
+    ).exec();
+  return;
+};
+/** Function that tries to add new category to the DB.
  * @function categoryPostHandler
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} req - Request object from post method.
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} res - Response object.

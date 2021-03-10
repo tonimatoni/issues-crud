@@ -7,6 +7,13 @@ a {
   color: #00b7ff;
 }
 
+.valign-top {
+  vertical-align: top !important;
+}
+
+.moreDetailsTable {
+  display: none;
+}
 #addIssueBtn {
   position: absolute;
   bottom: 2rem;

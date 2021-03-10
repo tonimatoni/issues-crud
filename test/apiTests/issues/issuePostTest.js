@@ -21,7 +21,6 @@ describe("Issues POST route", () => {
         .select({ _id: 1 })
         .exec()
         .then((data) => {
-          console.log();
           const issue = {
             title: "Test1Title",
             description: "Test1Description",
