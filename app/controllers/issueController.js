@@ -19,13 +19,14 @@ const idValidator = require("../validator.js").modelID;
 
 exports.issuePostHandler = (req, res) => {
   var attachments = null;
-  if (req.files)
+  if (req.files) {
     attachments = req.files.map((file) => {
       return {
         path: "http://localhost:3000/issueAttachments/" + file.filename,
         contentType: "application/octet-stream",
       };
     });
+  }
   const errorMessage = issueValidator.validate(req.body).error;
   if (errorMessage) {
     res.status(400).json({ error: errorMessage.details });

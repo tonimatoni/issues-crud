@@ -8,4 +8,5 @@ var storage = multer.diskStorage({
     cb(null, `${file.fieldname}-${Date.now()}.${ext}`);
   },
 });
-exports.upload = multer({ storage });
+
+exports.upload = multer({ storage: storage }).array("attachments", 10);
