@@ -25,7 +25,19 @@ $(document).ready(function () {
       var file = attachments[i];
       formData.append("attachments", file, file.name);
     }
-    addCategory(formData);
+    $.ajax({
+      type: "POST",
+      url: baseURL + "/categories/post",
+      data: { title: category },
+
+      success: function (id) {
+        fd.append("category_id", id);
+        addIssue(formData);
+      },
+      error: function (response) {
+        alert(response.error);
+      },
+    });
   });
   /**
    * Appends the provided array to datalist element
@@ -215,27 +227,6 @@ $(document).ready(function () {
       success: function (response) {
         getCategoriesAll();
         updateCategory(response.id, response.category_id);
-      },
-    });
-  }
-  /**
-   * Request to add a new category (or returns ID if the title already exists)
-   * @function addCategory
-   * @param {FormData} formData
-   */
-
-  function addCategory(formData) {
-    $.ajax({
-      type: "POST",
-      url: baseURL + "/categories/post",
-      data: { title: category },
-
-      success: function (id) {
-        formData.append("category_id", id);
-        addIssue(formData);
-      },
-      error: function (response) {
-        alert(response.error);
       },
     });
   }
