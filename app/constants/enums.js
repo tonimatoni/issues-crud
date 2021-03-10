@@ -1,4 +1,4 @@
-export const issueStatusEnum = {
+exports.issueStatusEnum = {
   FINISHED: "finished",
   PENDING: "pending",
 };

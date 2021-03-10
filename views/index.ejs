@@ -10,11 +10,79 @@
 </html>
 
 <body>
+    <button type="button" id="addIssueBtn" class="btn btn-success btn-lg" data-toggle="modal"
+        data-target="#addIssueForm">
+        <i class="fas fa-plus"></i>
 
+    </button>
+    <!-- Modal HTML Markup -->
+    <div id="addIssueForm" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-12">
+                        <h3 class="modal-title">Create issue</h3>
+                        <h5>Add an issue by submitting the form.</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="createCategoryForm">
+                        <div class="row">
+                            <div class="col">
+                                <label for="title">Add some title:</label>
+                                <input id="title" class="form-control" type="text" name="title">
+                            </div>
+                            <div class="col">
+                                <label for="description">Add some description:</label>
+                                <textarea id="description" class="form-control" type="text"
+                                    name="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+
+                                <label for="attachments">Add attachments:</label>
+                                <input class="form-control-file" id="attachments" type="file" name="attachments"
+                                    multiple>
+                            </div>
+                            <div class="col">
+                                <label for="category">Choose category:</label>
+                                <input id="category" class="form-control" list="categoriesList" type="text"
+                                    name="category">
+                                <datalist id="categoriesList">
+                                </datalist>
+                            </div>
+                            <div class="col">
+                                <br>
+                                <input class="form-control" type="submit" value="Submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <div class="container">
+        Select a category to start.
 
+        <select class="form-control" name="" id="categories">
+            <option value="">Choose a category</option>
+        </select>
+        <div>
+            <table id="issues" class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Created at</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"

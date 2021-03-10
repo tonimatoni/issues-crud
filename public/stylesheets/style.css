@@ -4,5 +4,23 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+.valign-top {
+  vertical-align: top !important;
+}
+
+.moreDetailsTable {
+  display: none;
+}
+#addIssueBtn {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  border-radius: 50%;
+}
+
+#addIssueBtn i {
+  font-size: 75px;
 }

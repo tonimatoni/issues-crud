@@ -51,6 +51,8 @@ exports.model = mongoose.model("Issues", IssueSchema);
 exports.validator = Joi.object().keys({
   title: Joi.string().min(4).max(30).required(),
   description: Joi.string().min(4).max(200).required(),
+  category_id: Joi.string().alphanum().length(24).required(),
+  attachments: Joi.optional(),
 });
 
 exports.commentsValidator = Joi.object().keys({
