@@ -58,11 +58,7 @@ const uploadController = require("../app/controllers/uploadController.js");
  *                 type: string
  */
 
-router.post(
-  "/post",
-  uploadController.upload.array("attachments", 10),
-  issueController.issuePostHandler
-);
+router.post("/post", uploadController.upload, issueController.issuePostHandler);
 
 /**
  * @swagger
@@ -221,7 +217,7 @@ router.post("/:id/comment/post", issueController.commentPostHandler);
  * @swagger
  * /issues/{id}/update:
  *   put:
- *     summary: Creates a new comment for an issue
+ *     summary: Changes title and description.
  *     tags:
  *       - issues
  *     parameters:
