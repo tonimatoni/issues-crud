@@ -62,18 +62,18 @@ describe("Issues GET route", () => {
           done();
         });
     });
-    it("It should NOT GET issues by category ID (bad ID)", (done) => {
-      chai
-        .request(app)
-        .get("/issues/get-by-category")
-        .query({ category_id: "category123" })
-        .end((err, res) => {
-          res.should.have.status(404);
-          done();
-        });
+    describe("GET /issues/get-by-category", () => {
+      it("It should NOT GET issues by category ID (bad ID)", (done) => {
+        chai
+          .request(app)
+          .get("/issues/get-by-category")
+          .query({ category_id: "60480f8635f3ab250010a57c" })
+          .end((err, res) => {
+            res.should.have.status(404);
+            done();
+          });
+      });
     });
-  });
-  describe("GET /issues/get-by-category", () => {
     it("It should NOT GET issues by category ID (empty ID)", (done) => {
       chai
         .request(app)

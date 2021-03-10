@@ -2,6 +2,8 @@ const Issue = require("../models/Issue").model;
 const issueValidator = require("../models/Issue").validator;
 const deleteIssueFromCategory = require("./categoryController")
   .deleteIssueFromCategory;
+const idValidator = require("../validator.js").modelID;
+
 /**
  * Function that adds new issue to the MongoDB.
  * @function issuePostHandler
@@ -59,13 +61,20 @@ exports.issueReadHandler = async (req, res) => {
 
 /**
  * Reads all issues by provided category ID from the MongoDB.
- * @function issueReadHandler
+ * @function issueReadByCategory
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} req - Request object from post method.
  * @param {Request<ParamsDictionary, any, any, qs.ParsedQs, Record<string, any>>} res - Response object.
  */
 
 exports.issueReadByCategory = async (req, res) => {
   var issues = [];
+  const validate = { id: req.query.category_id };
+  const errorMessage = idValidator.validate(validate).error;
+  if (errorMessage) {
+    console.log(errorMessage.details);
+    res.status(400).json({ error: errorMessage.message });
+    return;
+  }
   try {
     issues = await Issue.find({
       category_id: req.query.category_id,
@@ -91,6 +100,12 @@ exports.issueReadByCategory = async (req, res) => {
 
 exports.issueDeleteById = async (req, res) => {
   let issue = {};
+  const errorMessage = idValidator.validate(req.params).error;
+  if (errorMessage) {
+    console.log(errorMessage.details);
+    res.status(400).json({ error: errorMessage.message });
+    return;
+  }
   try {
     issue = await Issue.findById(req.params.id).exec();
   } catch (error) {

@@ -50,7 +50,7 @@ Category.create({ title: "DeleteTestCategory" })
         it("It should NOT DELETE issue (id is invalid)", (done) => {
           chai
             .request(app)
-            .delete("/issues/delete/adsfaskwai12")
+            .delete("/issues/delete/60480f8635f3ab250010a57c")
             .end((err, res) => {
               res.should.have.status(404);
               done();
